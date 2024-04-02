@@ -1,18 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+
 import axios from "axios";
 import Swal from "sweetalert2";
+import useTask from "../Hooks/useTask";
 
 
 const ToDo = () => {
-  const { data: task, refetch } = useQuery({
-    queryKey: ['item'],
-    queryFn: async () => {
-      const res = await axios.get('http://localhost:5000/task')
-      console.log(task);
-      return (res.data)
-
-    }
-  })
+  const {task,refetch} = useTask()
 
   const handleDelete = (user) => {
     Swal.fire({

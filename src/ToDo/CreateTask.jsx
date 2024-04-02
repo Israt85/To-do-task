@@ -1,10 +1,13 @@
-import React from 'react';
 import ToDo from './ToDo';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
+import useTask from '../Hooks/useTask';
 
 const CreateTask = () => {
+  const {task,refetch} = useTask()
+ 
     const {
         register,
         handleSubmit,
@@ -20,7 +23,8 @@ const CreateTask = () => {
         }
         axios.post('http://localhost:5000/task', obj)
         .then(res => {
-            console.log(res.data);
+            console.log(res.data)
+           
            if(res.data.insertedId){
             Swal.fire({
               position: "top-center",
@@ -30,6 +34,7 @@ const CreateTask = () => {
               timer: 1500
             });
            }
+           refetch()
         })
         .catch(error => {
            console.error('Error creating task:', error);
